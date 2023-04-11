@@ -47,6 +47,22 @@ function grabApi2(libUrl) {
 }
 grabApi2(libUrl);
 
+// favorites page local storage code
+var myData = localStorage.getItem("myData");
+var myDataObject = JSON.parse(myData);
+
+// var  = document.getElementById("m");
+// myDiv.textContent = myDataObject.myProperty;
+
+// const user = {
+//     // need to work on this
+//   };
+  
+//   const userJSON = JSON.stringify(user);
+  
+//   localStorage.setItem("user", userJSON);
+  
+
 function callNYT(searchTrending) {
     searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
     console.log(searchTrending);
