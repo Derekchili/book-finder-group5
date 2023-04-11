@@ -107,7 +107,7 @@ select {
   margin: 0 auto;
   min-width: 250px;
 }
-#genre-dropdown {
+.dropdown-wrapper {
   font-size: 20px;
   color: white;
   display: flex;
