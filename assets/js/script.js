@@ -19,8 +19,8 @@ function grabApi(googUrl) {
 }
 grabApi(googUrl);
 
-function grabApi2(libUrl) {
-    fetch(libUrl)
+function grabApi2(nytUrl) {
+    fetch(nytUrl)
         .then(function(response) {
             console.log(response);
             return response.json();
@@ -29,23 +29,40 @@ function grabApi2(libUrl) {
     console.log('Fetch Response \n----------');
     console.log(data);
 
-// we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
-    var books = data.results.books;
-    var bookList = [];
+          // clear existing books
+      $('#book-container').empty();
 
-    for(var i = 0; i < books.length; i++) {
-        var book = books[i];
+      var bookList = data.results.books;
+      var bookContainer = $('#book-container');
+
+      for(var i = 0; i < bookList.length; i++) {
+        var book = bookList[i];
         var bookTitle = book.title;
         var bookAuthor = book.author;
-        var bookImgUrl = book.book_image;
+        var bookImgUrl = book.book_image.replace('b.jpg', 's.jpg');
         var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
         bookList.push(bookInfo);
+
+        var card = $('<div>').addClass('card')
+        var img = $('<img>').addClass('card-img-top').attr('src', bookImgUrl);
+        var cardBody = $('<div>').addClass('card-body');
+        var cardTitle = $('<h5>').addClass('card-title').text(bookTitle);
+        var cardText = $('<p>').addClass('card-text').text(bookAuthor);
+
+        cardBody.append(cardTitle, cardText);
+        card.append(img, cardBody);
+
+        bookContainer.append(card);
+
+    
+        
+        
     }
-    console.log(bookList);
+   
 })
  
 }
-grabApi2(libUrl);
+grabApi2(nytUrl);
 
 function callNYT(searchTrending) {
     searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
@@ -70,7 +87,7 @@ function retrieveTrending() {
         dataType: "json",
         success: function (result) {
             alert("result " + result);
-            var topTrendList = $("#trending");
+            var topTrendList = $("#top-trending");
             var trending = result["results"]
             trending.forEach(trending => {
                 topTrendList.append(`<option class="${trending["list_current_encoded"]}">
@@ -219,3 +236,28 @@ function retrieveGenres() {
     }  
     )
     }
+
+
+    // var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
+
+    // var bookList = data.results.books;
+    // var topTrendList = $('#top-trending');
+
+    // for(var i = 0; i < bookList.length; i++) {
+    //     var book = bookList[i];
+    //     var bookTitle = book.title;
+    //     var bookAuthor = book.author;
+    //     var bookImgUrl = book.book_image.replace('b.jpg', 's.jpg');
+    //     var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
+    //     bookList.push(bookInfo);
+
+    //     var card = $('<div>').addClass('card')
+    //     var img = $('<img>').addClass('card-img-top').attr('src', bookImgUrl);
+    //     var cardBody = $('<div>').addClass('card-body');
+    //     var cardTitle = $('<h5>').addClass('card-title').text(bookTitle);
+    //     var cardText = $('<p>').addClass('card-text').text(bookAuthor);
+
+    //     cardBody.append(cardTitle, cardText);
+    //     card.append(img, cardBody);
+
+    //     topTrendList.append(card);
