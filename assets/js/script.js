@@ -5,31 +5,31 @@ var libUrl = 'https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=9
 console.log(googUrl);
 console.log(libUrl);
 
-// function grabApi(googUrl) {
-//     fetch(googUrl)
-//         .then(function(response) {
-//             console.log(response);
-//             return response.json();
-//  })
-//     .then(function (data) {
-//         console.log('Fetch Response \n----------');
-//         console.log(data);
-//  })
-// }
-// grabApi(googUrl);
+function grabApi(googUrl) {
+    fetch(googUrl)
+        .then(function(response) {
+            console.log(response);
+            return response.json();
+ })
+    .then(function (data) {
+        console.log('Fetch Response \n----------');
+        console.log(data);
+ })
+}
+grabApi(googUrl);
 
-// function grabApi2(libUrl) {
-//     fetch(libUrl)
-//         .then(function(response) {
-//             console.log(response);
-//             return response.json();
-//  })
-//  .then(function (data) {
-//     console.log('Fetch Response \n----------');
-//     console.log(data);
-// })
-// }
-// grabApi2(libUrl);
+function grabApi2(libUrl) {
+    fetch(libUrl)
+        .then(function(response) {
+            console.log(response);
+            return response.json();
+ })
+ .then(function (data) {
+    console.log('Fetch Response \n----------');
+    console.log(data);
+})
+}
+grabApi2(libUrl);
 
 
 // this sends a get response to the API (google) and retrieves the response data
@@ -88,13 +88,12 @@ function callGoogle(searchWords) {
         type: "GET",
         url: "https://www.googleapis.com/books/v1/volumes?q=inauthor:" + searchWords + "&key=AIzaSyD_J1_2HDf8XZGF7p11aeX7W_ICizZspas",
         dataType: "json",
-        success: function (result, status, xhr) {
-            alert("result " + result);
+        success: function (result) {
+            console.log("result " + result);
         },
-        error: function (xhr, status, error) {
-            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+        
         }
-    })
+    )
 }
 
 function callNYT(searchGenres) {
@@ -104,13 +103,12 @@ function callNYT(searchGenres) {
         type: "GET",
         url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchGenres + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
         dataType: "json",
-        success: function (result, status, xhr) {
-            alert("result " + result);
+        success: function (result) {
+            console.log("result " + result);
         },
-        error: function (xhr, status, error) {
-            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-        }
-    })
+        
+        
+    });
 }
 
 function retrieveGenres() {
@@ -130,8 +128,7 @@ function retrieveGenres() {
                  
             });
         },
-        error: function (xhr, status, error) {
-            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-        }
-    })
-}
+    
+    }  
+    )
+    }
