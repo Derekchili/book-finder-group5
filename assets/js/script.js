@@ -1,10 +1,10 @@
 // AHHHHHHHHHHHH!!!!!!!
 var googUrl = 'https://www.googleapis.com/books/v1/volumes?q=search+terms&key=AIzaSyD_J1_2HDf8XZGF7p11aeX7W_ICizZspas';
-
-var libUrl = 'https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa';
-
+var googleApiKey = 'AIzaSyD_J1_2HDf8XZGF7p11aeX7W_ICizZspas';
+var nytUrl = 'https://api.nytimes.com/svc/books/v3/lists/overview.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa';
+var query = "JavaScript";
 console.log(googUrl);
-console.log(libUrl);
+console.log(nytUrl);
 
 function grabApi(googUrl) {
     fetch(googUrl)
@@ -15,17 +15,43 @@ function grabApi(googUrl) {
 }
 grabApi(googUrl);
 
-function grabApi2(libUrl) {
-    fetch(libUrl)
+function grabApi2(nytUrl) {
+    fetch(nytUrl)
         .then(function(response) {
             console.log(response);
             return response.json();
  });
 }
-grabApi2(libUrl);
+grabApi2(nytUrl);
 
-var
-var
+
+  fetch(`${googUrl}volumes?q=${query}&key=${googleApiKey}`)
+  .then(response => response.json())
+  .then(data => {
+    data.items.forEach(item => {
+      const title = item.volumeInfo.title;
+      const authors = item.volumeInfo.authors;
+      const description = item.volumeInfo.description;
+
+      var titleElement = document.getElementById("author-search");
+      var authorElement = document.createElement("p");
+      var descriptionElement = document.createElement("p");
+
+      // sets the text content of the HTML elements to the book information
+      titleElement.textContent = title;
+      authorElement.textContent = "Author(s): " + authors.join(", ");
+      descriptionElement.textContent = description;
+
+      // append the HTML elements to the bookElement
+      bookElement.appendChild(titleElement);
+      bookElement.appendChild(authorElement);
+      bookElement.appendChild(descriptionElement);
+
+      // append the bookElement to the bookResults element on the webpage
+      bookResults.appendChild(bookElement);
+    });
+  });
+
 // this sends a get response to the API (google) and retrieves the response data
 // response = requests.get(endpoint, params=params).json();
 
