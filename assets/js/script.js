@@ -6,85 +6,87 @@ console.log(googUrl);
 console.log(nytUrl);
 
 // fetches the google api and turns into a json response
-function grabApi(googUrl) {
-    fetch(googUrl)
-        .then(function(response) {
-            console.log(response);
-            return response.json();
- })
-    .then(function (data) {
-        console.log('Fetch Response \n----------');
-        console.log(data);
- });
-}
-grabApi(googUrl);
+// function grabApi(googUrl) {
+//     fetch(googUrl)
+//         .then(function(response) {
+//             console.log(response);
+//             return response.json();
+//  })
+//     .then(function (data) {
+//         console.log('Fetch Response \n----------');
+//         console.log(data);
+//  });
+// }
+// grabApi(googUrl);
 
-function grabApi2(libUrl) {
-    fetch(libUrl)
-        .then(function(response) {
-            console.log(response);
-            return response.json();
- })
- .then(function (data) {
-    console.log('Fetch Response \n----------');
-    console.log(data);
-
+// function grabApi2(libUrl) {
+//     fetch(libUrl)
+//         .then(function(response) {
+//             console.log(response);
+//             return response.json();
+//  })
+// }
+//  .then(function (data) {
+//     console.log('Fetch Response \n----------');
+//     console.log(data);
+//  }
+// }
 // we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
-    var books = data.results.books;
-    var bookList = [];
+//     var books = data.results.books;
+//     var bookList = [];
 
-    for(var i = 0; i < books.length; i++) {
-        var book = books[i];
-        var bookTitle = book.title;
-        var bookAuthor = book.author;
-        var bookImgUrl = book.book_image;
-        var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
-        bookList.push(bookInfo);
-    }
-    console.log(bookList);
-})
+//     for(var i = 0; i < books.length; i++) {
+//         var book = books[i];
+//         var bookTitle = book.title;
+//         var bookAuthor = book.author;
+//         var bookImgUrl = book.book_image;
+//         var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
+//         bookList.push(bookInfo);
+//     }
+//     console.log(bookList);
+// })
  
-}
-grabApi2(libUrl);
+// }
+// grabApi2();
 
-function callNYT(searchTrending) {
-    searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
-    console.log(searchTrending);
-    $.ajax({
-        type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-        dataType: "json",
-        success: function (result) {
-            console.log("result " + result);
-        },
+// function callNYT(searchTrending) {
+//     searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
+//     console.log(searchTrending);
+//     $.ajax({
+//         type: "GET",
+//         url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+//         dataType: "json",
+//         success: function (result) {
+//             console.log("result " + result);
+//         },
         
         
-    });
-}
+//     });
+// }
 
 
-function retrieveTrending() {
-    $.ajax({
-        type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/current.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-        dataType: "json",
-        success: function (result) {
-            alert("result " + result);
-            var topTrendList = $("#trending");
-            var trending = result["results"]
-            trending.forEach(trending => {
-                topTrendList.append(`<option class="${trending["list_current_encoded"]}">
-                ${trending["list_current_encoded"]}
-        </option>`
-                        );
-                        bookList = result['results'];
-                        console.log(bookList, 'bookList');
-            });
-        },
+// function retrieveTrending() {
+//     $.ajax({
+//         type: "GET",
+//         url: "https://api.nytimes.com/svc/books/v3/lists/current.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+//         dataType: "json",
+//         success: function (result) {
+//             alert("result " + result);
+//             var topTrendList = $("#trending");
+//             var trending = result["results"]
+//             trending.forEach(trending => {
+//                 topTrendList.append(`<option class="${trending["list_current_encoded"]}">
+//                 ${trending["list_current_encoded"]}
+//         </option>`
+//                         );
+//                         bookList = result['results'];
+//                         console.log(bookList, 'bookList');
+//             });
+//         },
     
-    }  
-    )
-    }
+//     }  
+//     )
+//     }
 
 //  checking if local storage is supported by used browser
 if (typeof(Storage) !== 'undefined') {
@@ -176,7 +178,8 @@ function callGoogle(searchWords) {
         url: "https://www.googleapis.com/books/v1/volumes?q=inauthor:" + searchWords + "&key=AIzaSyD_J1_2HDf8XZGF7p11aeX7W_ICizZspas",
         dataType: "json",
         success: function (result) {
-            console.log("result " + result);
+            console.log("result " + [result]);
+            $("div.author-results").text("<p>testing</p>");
         },
         
         }
@@ -217,5 +220,4 @@ function retrieveGenres() {
         },
     
     }  
-    )
-    }
+    )}
