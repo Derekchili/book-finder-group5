@@ -112,3 +112,7 @@ select {
   color: white;
   display: flex;
 }
+
+.my-fav-header {
+  color: black;
+}

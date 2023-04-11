@@ -11,19 +11,19 @@
   <body>
     <header>
       <h1>Book Finder</h1>
-      <button class="favorites-btn">My Favorites</button>
+      <a href="favorite.html" class="favorites-btn">My Favorites</a>
     </header>
     <main>
       <section id="author" class="card">
         <h2>Author</h2>
         <input type="text" placeholder="Search..." id="author-search" />
       </section>
-      <section id="genre" class="card">
-        <h2>Genre</h2>
-        <input type="text" placeholder="Search..." id="genre-search" />
-      </section>
       <section id="top-trending" class="card">
         <h2>Top Trending</h2>
+        <input type="text" placeholder="Search..." id="trending" />
+      </section>
+      <section id="genre" class="card">
+        <h2>Genre</h2>
         <div id="genre-dropdown">
           <label for="dropdown">Select a genre:</label>
           <select id="dropdown">
@@ -36,6 +36,7 @@
         </div>
       </section>
     </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
