@@ -152,7 +152,7 @@ $(function () {
     auth.on("change", authSearch);
     var genre = $("#genre-search");
     genre.on("change", genreSearch);
-    var trend = $("#dropdown");
+    var trend = $("#trending-dropdown");
     trend.on("change", trendSearch);
     retrieveGenres();
 });
@@ -208,7 +208,7 @@ function retrieveGenres() {
         dataType: "json",
         success: function (result, status, xhr) {
             alert("result " + result);
-            var genreList = $("#dropdown");
+            var genreList = $("#genre-dropdown");
             var genres = result["results"]
             genres.forEach(genre => {
                 genreList.append(`<option value="${genre["list_name_encoded"]}">
