@@ -1,11 +1,11 @@
 var googUrl = 'https://www.googleapis.com/books/v1/volumes?q=search+terms&key=AIzaSyD_J1_2HDf8XZGF7p11aeX7W_ICizZspas';
 
-var libUrl = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa';
+var nytUrl = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa';
 
 console.log(googUrl);
-console.log(libUrl);
+console.log(nytUrl);
 
-
+// fetches the google api and turns into a json response
 function grabApi(googUrl) {
     fetch(googUrl)
         .then(function(response) {
@@ -19,8 +19,9 @@ function grabApi(googUrl) {
 }
 grabApi(googUrl);
 
-function grabApi2(libUrl) {
-    fetch(libUrl)
+//  fetched the NYT api and turns into a json response
+function grabApi2(nytUrl) {
+    fetch(nytUrl)
         .then(function(response) {
             console.log(response);
             return response.json();
@@ -42,11 +43,29 @@ function grabApi2(libUrl) {
     }
     console.log(bookList);
 
-    $('#trending').text(bookList.join('\n'));
+    // $('#trending').text(bookList.join('\n'));
 })
- 
+
 }
-grabApi2(libUrl);
+grabApi2(nytUrl);
+
+// // trying to create a function to grab the results from the bookList array and display it in a list on the page!?
+// function renderBtn(){
+//     if (bookList.length > 0) {
+//       bookInfo(bookList[0])
+//       for (let i = 0; i < bookList.length; i++) {
+//         $(".trending-list").append(`<li><button class='listItem'>${bookListArr[i]}</button></li>`);
+        
+//       }
+//     }
+//     $('.listItem').on('click', function (event){
+//       var clickTrending = $(event.target).text();
+//       bookInfo(clickTrending);
+//       console.log(clickTrending);
+//     });
+//   }
+// renderBtn();
+  
 
 
 
