@@ -6,63 +6,63 @@ console.log(googUrl);
 console.log(nytUrl);
 
 // fetches the google api and turns into a json response
-// function grabApi(googUrl) {
-//     fetch(googUrl)
-//         .then(function(response) {
-//             console.log(response);
-//             return response.json();
-//  })
-//     .then(function (data) {
-//         console.log('Fetch Response \n----------');
-//         console.log(data);
-//  });
-// }
-// grabApi(googUrl);
+function grabApi(googUrl) {
+    fetch(googUrl)
+        .then(function(response) {
+            console.log(response);
+            return response.json();
+ })
+    .then(function (data) {
+        console.log('Fetch Response \n----------');
+        console.log(data);
+ });
+}
+grabApi(googUrl);
 
-// function grabApi2(libUrl) {
-//     fetch(libUrl)
-//         .then(function(response) {
-//             console.log(response);
-//             return response.json();
-//  })
-// }
-//  .then(function (data) {
-//     console.log('Fetch Response \n----------');
-//     console.log(data);
-//  }
-// }
-// we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
-//     var books = data.results.books;
-//     var bookList = [];
+function grabApi2(libUrl) {
+    fetch(libUrl)
+        .then(function(response) {
+            console.log(response);
+            return response.json();
+ })
+}
+ then(function (data) {
+    console.log('Fetch Response \n----------');
+    console.log(data);
+ })
 
-//     for(var i = 0; i < books.length; i++) {
-//         var book = books[i];
-//         var bookTitle = book.title;
-//         var bookAuthor = book.author;
-//         var bookImgUrl = book.book_image;
-//         var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
-//         bookList.push(bookInfo);
-//     }
-//     console.log(bookList);
-// })
+//we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
+    var books = data.results.books;
+    var bookList = [];
+
+    for(var i = 0; i < books.length; i++) {
+        var book = books[i];
+        var bookTitle = book.title;
+        var bookAuthor = book.author;
+        var bookImgUrl = book.book_image;
+        var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
+        bookList.push(bookInfo);
+    }
+    console.log(bookList);
+
  
-// }
-// grabApi2();
 
-// function callNYT(searchTrending) {
-//     searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
-//     console.log(searchTrending);
-//     $.ajax({
-//         type: "GET",
-//         url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-//         dataType: "json",
-//         success: function (result) {
-//             console.log("result " + result);
-//         },
+grabApi2();
+
+function callNYT(searchTrending) {
+    searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
+    console.log(searchTrending);
+    $.ajax({
+        type: "GET",
+        url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+        dataType: "json",
+        success: function (result) {
+            console.log("result " + result);
+        },
         
         
-//     });
-// }
+    });
+}
 
 
 // function retrieveTrending() {
@@ -107,46 +107,46 @@ if (typeof(Storage) !== 'undefined') {
 
 
 
-// // we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
-// $(document).ready(function() {
-//     $('.favorites-btn').on('click', function(event) {
-//     event.preventDefault(); 
+// we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
+$(document).ready(function() {
+    $('.favorites-btn').on('click', function(event) {
+    event.preventDefault(); 
     
-//     var itemId = $(this).data('id');
+    var itemId = $(this).data('id');
 
-//     var index = favorites.indexOf(itemId);
-//     if (index === -1) {
-// // checking to see if item is already in favorites, if not then we'll add it the array
-//     favorites.push(itemId);
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-//     $(this).addClass('active');
-//     }
-//     else {
-//     favorites.splice(index, 1);
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-//     $(this).removeClass('active');
-//     }
-// });
-// });
+    var index = favorites.indexOf(itemId);
+    if (index === -1) {
+// checking to see if item is already in favorites, if not then we'll add it the array
+    favorites.push(itemId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    $(this).addClass('active');
+    }
+    else {
+    favorites.splice(index, 1);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    $(this).removeClass('active');
+    }
+});
+});
 
-// // with the link to favorites page with a class and using a method chaining for this function
-// $(document).ready(function() {
-//     $('.favorites-link').on('click', function(event) {
-//     event.preventDefault();
+// with the link to favorites page with a class and using a method chaining for this function
+$(document).ready(function() {
+    $('.favorites-link').on('click', function(event) {
+    event.preventDefault();
 
-//     var storedFavorites = localStorage.getItem('favorites');
-//     if (storedFavorites) {
-//         var favorites = JSON.parse(storedFavorites);
+    var storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+        var favorites = JSON.parse(storedFavorites);
 
-//         var $ul = $('<ul>');
-//         favorites.forEach(function(itemId) {
-//             var $li = $('<li>').text(itemId);
-//             $ul.append($li);
-//         });
+        var $ul = $('<ul>');
+        favorites.forEach(function(itemId) {
+            var $li = $('<li>').text(itemId);
+            $ul.append($li);
+        })
+    }
+}
+)}
 
-
-//     }
-// })
 $(function () {
     var auth = $("#author-search");
     auth.on("change", authSearch);
