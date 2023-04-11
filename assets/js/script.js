@@ -19,9 +19,8 @@ function grabApi(googUrl) {
 }
 grabApi(googUrl);
 
-//  fetched the NYT api and turns into a json response
-function grabApi2(nytUrl) {
-    fetch(nytUrl)
+function grabApi2(libUrl) {
+    fetch(libUrl)
         .then(function(response) {
             console.log(response);
             return response.json();
@@ -44,49 +43,9 @@ function grabApi2(nytUrl) {
     }
     console.log(bookList);
 })
+ 
 }
-grabApi2(nytUrl);
-
-function callNYT(searchTrending) {
-    searchTrending = searchTredning.replace(/\s+/g, '-').toLowerCase();
-    console.log(searchTrending);
-    $.ajax({
-        type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-        dataType: "json",
-        success: function (result) {
-            console.log("result " + result);
-        },
-        
-        
-    });
-}
-
-
-function retrieveTrending() {
-    $.ajax({
-        type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/current.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-        dataType: "json",
-        success: function (result) {
-            alert("result " + result);
-            var topTrendList = $("#trending");
-            var trending = result["results"]
-            trending.forEach(trending => {
-                topTrendList.append(`<option class="${trending["list_current_encoded"]}">
-                ${trending["list_current_encoded"]}
-        </option>`
-                        );
-                        bookList = result['results'];
-                        console.log(bookList, 'bookList');
-            });
-        },
-    
-    }  
-    )
-    }
-
-  
+grabApi2(libUrl);
 
 
 
@@ -109,6 +68,46 @@ if (typeof(Storage) !== 'undefined') {
 
 
 
+// // we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
+// $(document).ready(function() {
+//     $('.favorites-btn').on('click', function(event) {
+//     event.preventDefault(); 
+    
+//     var itemId = $(this).data('id');
+
+//     var index = favorites.indexOf(itemId);
+//     if (index === -1) {
+// // checking to see if item is already in favorites, if not then we'll add it the array
+//     favorites.push(itemId);
+//     localStorage.setItem('favorites', JSON.stringify(favorites));
+//     $(this).addClass('active');
+//     }
+//     else {
+//     favorites.splice(index, 1);
+//     localStorage.setItem('favorites', JSON.stringify(favorites));
+//     $(this).removeClass('active');
+//     }
+// });
+// });
+
+// // with the link to favorites page with a class and using a method chaining for this function
+// $(document).ready(function() {
+//     $('.favorites-link').on('click', function(event) {
+//     event.preventDefault();
+
+//     var storedFavorites = localStorage.getItem('favorites');
+//     if (storedFavorites) {
+//         var favorites = JSON.parse(storedFavorites);
+
+//         var $ul = $('<ul>');
+//         favorites.forEach(function(itemId) {
+//             var $li = $('<li>').text(itemId);
+//             $ul.append($li);
+//         });
+
+
+//     }
+// })
 $(function () {
     var auth = $("#author-search");
     auth.on("change", authSearch);
@@ -183,98 +182,3 @@ function retrieveGenres() {
     }  
     )
     }
-
-
-// // trying to create a function to grab the results from the bookList array and display it in a list on the page!?
-// function renderBtn(){
-//     if (bookList.length > 0) {
-//       bookInfo(bookList[0])
-//       for (let i = 0; i < bookList.length; i++) {
-//         $(".trending-list").append(`<li><button class='listItem'>${bookListArr[i]}</button></li>`);
-        
-//       }
-//     }
-//     $('.listItem').on('click', function (event){
-//       var clickTrending = $(event.target).text();
-//       bookInfo(clickTrending);
-//       console.log(clickTrending);
-//     });
-//   }
-// renderBtn();
-
-// // we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
-// $(document).ready(function() {
-//     $('.favorites-btn').on('click', function(event) {
-//     event.preventDefault(); 
-    
-//     var itemId = $(this).data('id');
-
-//     var index = favorites.indexOf(itemId);
-//     if (index === -1) {
-// // checking to see if item is already in favorites, if not then we'll add it the array
-//     favorites.push(itemId);
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-//     $(this).addClass('active');
-//     }
-//     else {
-//     favorites.splice(index, 1);
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-//     $(this).removeClass('active');
-//     }
-// });
-// });
-
-// // with the link to favorites page with a class and using a method chaining for this function
-// $(document).ready(function() {
-//     $('.favorites-link').on('click', function(event) {
-//     event.preventDefault();
-
-//     var storedFavorites = localStorage.getItem('favorites');
-//     if (storedFavorites) {
-//         var favorites = JSON.parse(storedFavorites);
-
-//         var $ul = $('<ul>');
-//         favorites.forEach(function(itemId) {
-//             var $li = $('<li>').text(itemId);
-//             $ul.append($li);
-//         });
-
-
-//     }
-// })
-
-// function retrieveTrending() {
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "https://api.nytimes.com/svc/books/v3/lists/current.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-    //         dataType: "json",
-    //         success: function (result) {
-    //             alert("result " + result);
-    //             var topTrendList = $("#trending");
-    //             var trending = result["results"]
-                
-    //             bookList = trending.map(book => {
-    //                 return {
-    //                     title: book['display_name'],
-    //                     author: book['list-name'],
-    //                     imgUrl: book['list-image'],
-    //                 };
-    //             });
-    
-    //             for(var i = 0; i < bookList.length; i++) {
-    //                 var book = bookList[i];
-    //                 var button = $(`<button class="book-button">${book.title}</button>`);
-    
-    //                 button.click(function() {
-    //                     var card = ("#card");
-    //                     card.empty();
-    //                     card.append(`<img src="${book.imgUrl}" class="card-img-top">`);
-    //                     card.append(`<div class="card-body"><h5 class="card-title">${book.title}</h5><p class="card-text">${book.author}</p></div>`);
-    //                 });
-    //                 topTrendList.append(button);
-    //             }
-    //         },
-            
-    //     });
-    // }
-    
