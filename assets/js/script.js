@@ -28,7 +28,7 @@ function grabApi2(libUrl) {
  .then(function (data) {
     console.log('Fetch Response \n----------');
     console.log(data);
-
+// we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
     var books = data.results.books;
     var bookList = [];
 
@@ -36,12 +36,13 @@ function grabApi2(libUrl) {
         var book = books[i];
         var bookTitle = book.title;
         var bookAuthor = book.author;
-        var bookInfo = bookTitle + ' by ' + bookAuthor;
+        var bookImgUrl = book.book_image;
+        var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
         bookList.push(bookInfo);
     }
     console.log(bookList);
 
-    // $('#top-trending' + i + " #trending").text;
+    $('#trending').text(bookList.join('\n'));
 })
  
 }
@@ -66,9 +67,13 @@ if (typeof(Storage) !== 'undefined') {
         alert('Sorry, your browser does not support local storage');
 }
 
-// // we have our favorites array we should be able to use it 
-// $('a.favorites-btn').on('click', function(event) {
+
+
+// // we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
+// $(document).ready(function() {
+//     $('.favorites-btn').on('click', function(event) {
 //     event.preventDefault(); 
+    
 //     var itemId = $(this).data('id');
 
 //     var index = favorites.indexOf(itemId);
@@ -84,10 +89,11 @@ if (typeof(Storage) !== 'undefined') {
 //     $(this).removeClass('active');
 //     }
 // });
+// });
 
 // // with the link to favorites page with a class and using a method chaining for this function
-
-// $('a.favorites-link').on('click', function(event) {
+// $(document).ready(function() {
+//     $('.favorites-link').on('click', function(event) {
 //     event.preventDefault();
 
 //     var storedFavorites = localStorage.getItem('favorites');
@@ -101,4 +107,6 @@ if (typeof(Storage) !== 'undefined') {
 //         });
 
 
+//     }
+// });
 // });
