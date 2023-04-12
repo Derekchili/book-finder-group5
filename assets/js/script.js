@@ -5,6 +5,10 @@ var nytUrl = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-ficti
 console.log(googUrl);
 console.log(nytUrl);
 
+$(document).ready(function() {
+    $('select').material_select();
+});
+
 // fetches the google api and turns into a json response
 function grabApi(googUrl) {
     fetch(googUrl)
