@@ -19,8 +19,8 @@ function grabApi(googUrl) {
 }
 grabApi(googUrl);
 
-function grabApi2(libUrl) {
-    fetch(libUrl)
+function grabApi2(nytUrl) {
+    fetch(nytUrl)
         .then(function(response) {
             console.log(response);
             return response.json();
