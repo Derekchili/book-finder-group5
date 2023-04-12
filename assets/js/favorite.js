@@ -1,13 +1,11 @@
-var myData = localStorage.getItem("myData");
-var myDataObject = JSON.parse(myData);
+var favorites = localStorage.getItem('favorites');
+if (favorites) {
+    favorites = JSON.parse(favorites)
+} else {
+    favorites = [];
+}
+console.log(favorites);
 
-var myDiv = document.getElementById("m");
-myDiv.textContent = myDataObject;
+// loop over that array and every book create a html card or row based on the data in the card
 
-const user = {
-    // need to work on this
-  };
-  
-  const userJSON = JSON.stringify(user);
-  
-  localStorage.setItem("user", userJSON);
+$(".button-collapse").sideNav();
