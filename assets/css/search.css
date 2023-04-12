@@ -1,0 +1,38 @@
+.card {
+  height: calc(100vh - 64px - 52px);
+  margin: 10px 0 6px;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+}
+
+h2 {
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}
+
+a.brand-logo {
+  color: white;
+  font-size: 30px;
+}
+
+.nav-wrapper {
+  padding: 0 8px;
+}
+
+.input-field label {
+  color: white;
+}
+
+input {
+  border-bottom: 1px solid white !important;
+}
+
+.select-wrapper span.caret {
+  color: white;
+}
+
+::placeholder {
+  color: white;
+}
