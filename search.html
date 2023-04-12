@@ -4,48 +4,76 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/search.css" />
     <title>Book Finder</title>
   </head>
 
   <body>
     <header>
-      <h1>Book Finder</h1>
-      <a href="favorite.html" class="favorites-btn">My Favorites</a>
+      <nav>
+        <div class="nav-wrapper teal lighten-2">
+          <a href="#!" class="brand-logo">Book Finder</a>
+          <div class="right hide-on-med-and-down">
+            <a
+              href="favorite.html"
+              class="waves-effect waves-light btn-large amber darken-1"
+              >My Favorites</a
+            >
+          </div>
+        </div>
+      </nav>
     </header>
-    <main>
-      <section id="author" class="card">
-        <h2>Author</h2>
-        <input type="text" placeholder="Search..." id="author-search" />
-      </section>
-      <section id="top-trending" class="card">
-        <h2>Top Trending</h2>
-        <div id="trending-dropdown-wrapper" class="dropdown-wrapper">
-          <label for="trending-dropdown">Top 5 Trending:</label>
-          <select id="trending-dropdown">
-            <option value="romance">romance</option>
-            <option value="mystery">mystery</option>
-            <option value="non-fiction">non-fiction</option>
-            <option value="histroical-fiction">historical fiction</option>
-            <option value="fiction">fiction</option>
-          </select>
+    <main class="container">
+      <div class="row">
+        <div class="col s4">
+          <section id="author" class="amber accent-4 card">
+            <h2>Author</h2>
+            <div class="input-field">
+              <input type="text" placeholder="Type..." id="author-search" />
+              <label for="author-search">Search</label>
+            </div>
+          </section>
         </div>
-      </section>
-      <section id="genre" class="card">
-        <h2>Genre</h2>
-        <div id="genre-dropdown-wrapper" class="dropdown-wrapper">
-          <label for="genre-dropdown">Select a genre:</label>
-          <select id="genre-dropdown">
-            <option value="romance">romance</option>
-            <option value="mystery">mystery</option>
-            <option value="non-fiction">non-fiction</option>
-            <option value="histroical-fiction">historical fiction</option>
-            <option value="fiction">fiction</option>
-          </select>
+        <div class="col s4">
+          <section id="top-trending" class="amber accent-4 card">
+            <h2>Top Trending</h2>
+            <div class="input-field">
+              <select id="trending-dropdown">
+                <option disabled selected value="">Select...</option>
+                <option value="romance">romance</option>
+                <option value="mystery">mystery</option>
+                <option value="non-fiction">non-fiction</option>
+                <option value="histroical-fiction">historical fiction</option>
+                <option value="fiction">fiction</option>
+              </select>
+              <label for="trending-dropdown">Top 5 Trending</label>
+            </div>
+          </section>
         </div>
-      </section>
+        <div class="col s4">
+          <section id="genre" class="amber accent-4 card">
+            <h2>Genre</h2>
+            <div class="input-field">
+              <select id="genre-dropdown">
+                <option disabled selected value="">Select...</option>
+                <option value="romance">romance</option>
+                <option value="mystery">mystery</option>
+                <option value="non-fiction">non-fiction</option>
+                <option value="histroical-fiction">historical fiction</option>
+                <option value="fiction">fiction</option>
+              </select>
+              <label for="genre-dropdown">Select a genre</label>
+            </div>
+          </section>
+        </div>
+      </div>
     </main>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
