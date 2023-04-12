@@ -8,6 +8,8 @@ console.log(nytUrl);
 
 
 $(document).ready(function() {
+    $('select').material_select();
+    
     retrieveGenres();
 
 });
@@ -83,20 +85,20 @@ $(document).ready(function() {
 // with the link to favorites page with a class and using a method chaining for this function
 $(document).ready(function() {
     $('.favorites-link').on('click', function(event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    var storedFavorites = localStorage.getItem('favorites');
-    if (storedFavorites) {
-        var favorites = JSON.parse(storedFavorites);
+        var storedFavorites = localStorage.getItem('favorites');
+        if (storedFavorites) {
+            var favorites = JSON.parse(storedFavorites);
 
-        var $ul = $('<ul>');
-        favorites.forEach(function(itemId) {
-            var $li = $('<li>').text(itemId);
-            $ul.append($li);
-        })
-    }
-}
-)})
+            var $ul = $('<ul>');
+            favorites.forEach(function(itemId) {
+                var $li = $('<li>').text(itemId);
+                $ul.append($li);
+            });
+        }
+    });
+});
 
 
 // when other page loads retrieve from local sotrage
@@ -138,8 +140,7 @@ function callGoogle(searchWords) {
         error: function (xhr, status, error) {
             console.error("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
         }
-        }
-    )
+    });
 }
 
 function retrieveGenres() {
@@ -172,11 +173,29 @@ function retrieveGenres() {
             });
             $('select').material_select();            
         },
-    
-    }  
-    )
-    }
+    });
+}
 
+function retrieveTrending() {
+    $.ajax({
+        type: "GET",
+        url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+        dataType: "json",
+        success: function (result, status, xhr) {
+            var trendingList = $("#trend-dropdown");
+            var trending = result["results"]
+            trendingList.empty();
+            trendingList.append('<option disabled selected value="">Select...</option>')
+            trending.forEach(trend => {
+                trendingList.append(`<option value="${trend["list_name_encoded"]}">
+                            ${trend["list_name_encoded"]}
+                    </option>`
+                        );
+                    
+            });
+        },
+    });
+}
 
     function callNYTG(searchWords) {
         searchWords = searchWords.replace(/\s+/g, '-').toLowerCase();
