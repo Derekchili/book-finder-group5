@@ -8,3 +8,4 @@ console.log(favorites);
 
 // loop over that array and every book create a html card or row based on the data in the card
 
+$(".button-collapse").sideNav();
