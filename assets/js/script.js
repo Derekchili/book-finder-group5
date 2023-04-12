@@ -6,51 +6,76 @@ console.log(googUrl);
 console.log(nytUrl);
 
 
+
 $(document).ready(function() {
     retrieveGenres();
-
+    retrieveTrending();
 });
 
+$(function () {
+    var auth = $("#author-search");
+    auth.on("change", authSearch);
+    var genre = $("#genre-dropdown");
+    genre.on("change", genreSearch);
+    var trend = $("#trend-dropdown");
+    trend.on("change", trendSearch);
+    
+});
+
+function authSearch() {
+    callGoogle($(this).val());
+}
+
+function genreSearch() {
+    callNYTG($(this).val());
+}
+
+function trendSearch() {
+    callNYTT($(this).val());
+}
+
 // fetches the google api and turns into a json response
-function grabApi(googUrl) {
-    fetch(googUrl)
-        .then(function(response) {
-            console.log(response);
-            return response.json();
- })
-    .then(function (data) {
-        console.log('Fetch Response \n----------');
-        console.log(data);
- });
-}
-grabApi(googUrl);
+// function grabApi(googUrl) {
+//     fetch(googUrl)
+//         .then(function(response) {
+//             console.log(response);
+//             return response.json();
+//  })
+//     .then(function (data) {
+//         console.log('Fetch Response \n----------');
+//         console.log(data);
+//  });
+// }
+// grabApi(googUrl);
 
-function grabApi2(nytUrl) {
-    fetch(nytUrl)
-        .then(function(response) {
-            console.log(response);
-            return response.json();
- })
- .then(function (data) {
-    console.log('Fetch Response \n----------');
-    console.log(data);
+// function grabApi2(libUrl) {
+//     fetch(libUrl)
+//         .then(function(response) {
+//             console.log(response);
+//             return response.json();
+//  })
 
-// we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
-    var books = data.results.books;
-    var bookList = [];
+//  then(function (data) {
+//     console.log('Fetch Response \n----------');
+//     console.log(data);
+//  })
+// }
+//we have to figure out how to get this info from the array bookList into the html element #trending maybe turn it into a button with some sort of list that diplays, I also got it to display images of the book too.
+    // var books = data.results.books;
+    // var bookList = [];
 
-    for(var i = 0; i < books.length; i++) {
-        var book = books[i];
-        var bookTitle = book.title;
-        var bookAuthor = book.author;
-        var bookImgUrl = book.book_image;
-        var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
-        bookList.push(bookInfo);
-    }
-    console.log(bookList);
-})
+    // for(var i = 0; i < books.length; i++) {
+    //     var book = books[i];
+    //     var bookTitle = book.title;
+    //     var bookAuthor = book.author;
+    //     var bookImgUrl = book.book_image;
+    //     var bookInfo = '<img src="' + bookImgUrl + '"> ' + bookTitle + ' by ' + bookAuthor;
+    //     bookList.push(bookInfo);
+    // }
+    // console.log(bookList);
+
  
-}
+
 // grabApi2(libUrl);
 
 // favorites page local storage code
@@ -69,44 +94,7 @@ var myDataObject = JSON.parse(myData);
 //   localStorage.setItem("user", userJSON);
   
 
-function callNYT(searchTrending) {
-    searchTrending = searchTrending.replace(/\s+/g, '-').toLowerCase();
-    console.log(searchTrending);
-    $.ajax({
-        type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-        dataType: "json",
-        success: function (result) {
-            console.log("result " + result);
-        },
-        
-        
-    });
-}
 
-
-function retrieveTrending() {
-    $.ajax({
-        type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/current.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
-        dataType: "json",
-        success: function (result) {
-            alert("result " + result);
-            var topTrendList = $("#trending");
-            var trending = result["results"]
-            trending.forEach(trending => {
-                topTrendList.append(`<option class="${trending["list_current_encoded"]}">
-                ${trending["list_current_encoded"]}
-        </option>`
-                        );
-                        bookList = result['results'];
-                        console.log(bookList, 'bookList');
-            });
-        },
-    
-    }  
-    )
-    }
 
 //  checking if local storage is supported by used browser
 if (typeof(Storage) !== 'undefined') {
@@ -127,69 +115,47 @@ if (typeof(Storage) !== 'undefined') {
 
 
 
-// // we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
-// $(document).ready(function() {
-//     $('.favorites-btn').on('click', function(event) {
-//     event.preventDefault(); 
+// we have our favorites array we should be able to use it and store it into the favorite html where it displays in a card, or list somehow?
+$(document).ready(function() {
+    $('.favorites-btn').on('click', function(event) {
+    event.preventDefault(); 
     
-//     var itemId = $(this).data('id');
+    var itemId = $(this).data('id');
 
-//     var index = favorites.indexOf(itemId);
-//     if (index === -1) {
-// // checking to see if item is already in favorites, if not then we'll add it the array
-//     favorites.push(itemId);
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-//     $(this).addClass('active');
-//     }
-//     else {
-//     favorites.splice(index, 1);
-//     localStorage.setItem('favorites', JSON.stringify(favorites));
-//     $(this).removeClass('active');
-//     }
-// });
-// });
-
-// // with the link to favorites page with a class and using a method chaining for this function
-// $(document).ready(function() {
-//     $('.favorites-link').on('click', function(event) {
-//     event.preventDefault();
-
-//     var storedFavorites = localStorage.getItem('favorites');
-//     if (storedFavorites) {
-//         var favorites = JSON.parse(storedFavorites);
-
-//         var $ul = $('<ul>');
-//         favorites.forEach(function(itemId) {
-//             var $li = $('<li>').text(itemId);
-//             $ul.append($li);
-//         });
-
-
-//     }
-// })
-$(function () {
-    var auth = $("#author-search");
-    auth.on("change", authSearch);
-    var genre = $("#genre-dropdown");
-    genre.on("change", genreSearch);
-    var trend = $("#trending-dropdown");
-    trend.on("change", trendSearch);
-    
+    var index = favorites.indexOf(itemId);
+    if (index === -1) {
+// checking to see if item is already in favorites, if not then we'll add it the array
+    favorites.push(itemId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    $(this).addClass('active');
+    }
+    else {
+    favorites.splice(index, 1);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    $(this).removeClass('active');
+    }
+});
 });
 
-function authSearch() {
-    alert("test " + $(this).val());
-    callGoogle($(this).val());
-}
+// with the link to favorites page with a class and using a method chaining for this function
+$(document).ready(function() {
+    $('.favorites-link').on('click', function(event) {
+    event.preventDefault();
 
-function genreSearch() {
-    alert("test " + $(this).val());
-    callNYTG($(this).val());
-}
+    var storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+        var favorites = JSON.parse(storedFavorites);
 
-function trendSearch() {
-    alert("test " + $(this).val());
+        var $ul = $('<ul>');
+        favorites.forEach(function(itemId) {
+            var $li = $('<li>').text(itemId);
+            $ul.append($li);
+        })
+    }
 }
+)})
+
+
 
 function callGoogle(searchWords) {
     searchWords = searchWords.replace(/\s+/g, '+').toLowerCase();
@@ -227,7 +193,6 @@ function retrieveGenres() {
         url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
         dataType: "json",
         success: function (result, status, xhr) {
-            alert("result " + result);
             var genreList = $("#genre-dropdown");
             var genres = result["results"]
             genreList.empty();
@@ -239,12 +204,36 @@ function retrieveGenres() {
                         );
                  
             });
-            $('select').material_select();
+            
         },
     
     }  
     )
     }
+
+    function retrieveTrending() {
+        $.ajax({
+            type: "GET",
+            url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+            dataType: "json",
+            success: function (result, status, xhr) {
+                var trendingList = $("#trend-dropdown");
+                var trending = result["results"]
+                trendingList.empty();
+                trendingList.append('<option disabled selected value="">Select...</option>')
+                trending.forEach(trend => {
+                    trendingList.append(`<option value="${trend["list_name_encoded"]}">
+                                ${trend["list_name_encoded"]}
+                        </option>`
+                            );
+                     
+                });
+                $('select').material_select();
+            },
+        
+        }  
+        )
+        }
 
     function callNYTG(searchWords) {
         searchWords = searchWords.replace(/\s+/g, '-').toLowerCase();
@@ -274,3 +263,58 @@ function retrieveGenres() {
             }
         )
     }
+
+    function callNYTT(searchTrending) {
+        searchTrending = searchTrending.replace(/\s+/g, '-').toLowerCase();
+        console.log(searchTrending);
+             $.ajax({
+            type: "GET",
+                url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+                dataType: "json",
+                success: function (result) {
+                    var BookList = null;
+                    var items = null;
+                    console.log("result " + result);
+                    BookList = $("#trending-book-list");
+                    items = result["results"]["books"]
+                    BookList.empty()
+                    for (let i = 0; i < 5; i++) {
+                        var item = items[i]              
+                        var image  = "";
+                        if(item["book_image"]) {
+                            image = `<img src='${item["book_image"]}' height="60"></img>`
+                        }
+                        BookList.append(`<div class='trending-book'>${item["title"]} ${image}</div>`)
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                }
+                }
+            )
+        }
+    
+    
+    
+    // function retrieveTrending() {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "https://api.nytimes.com/svc/books/v3/lists/current.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+    //         dataType: "json",
+    //         success: function (result) {
+    //             alert("result " + result);
+    //             var topTrendList = $("#trending");
+    //             var trending = result["results"]
+    //             trending.forEach(trending => {
+    //                 topTrendList.append(`<option class="${trending["list_current_encoded"]}">
+    //                 ${trending["list_current_encoded"]}
+    //         </option>`
+    //                         );
+    //                         bookList = result['results'];
+    //                         console.log(bookList, 'bookList');
+    //             });
+    //         },
+        
+    //     }  
+    //     )
+    //     }
