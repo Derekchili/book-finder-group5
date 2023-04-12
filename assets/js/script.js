@@ -11,7 +11,7 @@ $(document).ready(function() {
     $('select').material_select();
     
     retrieveGenres();
-    retrieveTrending();
+
 });
 
 $(function () {
@@ -112,6 +112,7 @@ function callGoogle(searchWords) {
         success: function (result) {
             var authBookList = null;
             var items = null;
+          
             console.log("result " + result);
             authBookList = $("#auth-book-list");
             items = result["items"]
@@ -130,9 +131,12 @@ function callGoogle(searchWords) {
                 if(item["volumeInfo"]["imageLinks"]) {
                     image = `<img src='${item["volumeInfo"]["imageLinks"]["smallThumbnail"]}' height="60"></img>`
                 }
-                authBookList.append(`<div class='auth-book'>${item["volumeInfo"]["title"]} ${image}</div>`
-            )}
-        )},
+                authBookList.append(`<div class='auth-book'>${item["volumeInfo"]<a href=["title"]></a>} ${image}</div>`)
+        
+            })
+            },
+    
+        
         error: function (xhr, status, error) {
             console.error("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
         }
@@ -156,7 +160,18 @@ function retrieveGenres() {
                         );
                  
             });
-            
+            var trendingList = $("#trend-dropdown");
+            var trending = result["results"]
+            trendingList.empty();
+            trendingList.append('<option disabled selected value="">Select...</option>')
+            trending.forEach(trend => {
+                trendingList.append(`<option value="${trend["list_name_encoded"]}">
+                            ${trend["list_name_encoded"]}
+                    </option>`
+                        );
+                 
+            });
+            $('select').material_select();            
         },
     });
 }
@@ -202,6 +217,7 @@ function retrieveTrending() {
                         image = `<img src='${item["book_image"]}' height="60"></img>`
                     }
                     BookList.append(`<div class='genre-book'>${item["title"]} ${image}</div>`)
+                    BookList.append(`<a href=''>${item["amazon_product_url"]}</a>`)
                 }
             },
             error: function (xhr, status, error) {
