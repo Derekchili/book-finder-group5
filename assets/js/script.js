@@ -173,11 +173,20 @@ function callGoogle(searchWords) {
             authBookList.empty()
             items.forEach(item => {
                 var image  = "";
+                var title = item["volumeInfo"]["title"];
+                var imgLink = "";
                 if(item["volumeInfo"]["imageLinks"]) {
-                    image = `<img src='${item["volumeInfo"]["imageLinks"]["smallThumbnail"]}' height="60"></img>`
+                    imgLink = item["volumeInfo"]["imageLinks"]["smallThumbnail"]
+                    image = `<img src='${imgLink}' height="60"></img>`
                 }
-                authBookList.append(`<div class='auth-book'>${item["volumeInfo"]["title"]} ${image}</div>`)
-        
+                var div = $("<div/>").addClass("auth-book")
+                div.append(`<img class="save-img" src="assets/images/save-32.png" height="16" /><a href="${item["volumeInfo"]["canonicalVolumeLink"]}">${title}</a> ${image}`)
+                var chad = div.children("img.save-img")
+                chad.on("click", function() {
+                    saveBook(title, imgLink)
+                })
+                authBookList.append(div)
+                
             })
             },
     
@@ -189,6 +198,18 @@ function callGoogle(searchWords) {
     )
 }
 
+function saveBook(book, image) {
+    var storedFavorites = localStorage.getItem('favorites');
+
+    
+     if (storedFavorites) {
+        var favorites = JSON.parse(storedFavorites);
+    } else {
+        var favorites = {};
+    }
+    favorites[book] = image;    
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+}    
 
 
 function retrieveGenres() {
@@ -227,27 +248,36 @@ function retrieveGenres() {
     }
 
 
-    function callNYTG(searchWords) {
-        searchWords = searchWords.replace(/\s+/g, '-').toLowerCase();
-        $.ajax({
-            type: "GET",
-            url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchWords + ".json?api-key=HXC2XdDqarvPlDkZsP03TlD1AVWGZfbU",
-            dataType: "json",
-            success: function (result) {
-                var BookList = null;
-                var items = null;
-                console.log("result " + result);
-                BookList = $("#genre-book-list");
-                items = result["results"]["books"]
-                BookList.empty()
-                for (let i = 0; i < 5; i++) {
-                    var item = items[i]              
-                    var image  = "";
-                    if(item["book_image"]) {
-                        image = `<img src='${item["book_image"]}' height="60"></img>`
-                    }
-                    BookList.append(`<div class='genre-book'>${item["title"]} ${image}</div>`)
+function callNYTG(searchWords) {
+    searchWords = searchWords.replace(/\s+/g, '-').toLowerCase();
+    $.ajax({
+        type: "GET",
+        url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchWords + ".json?api-key=HXC2XdDqarvPlDkZsP03TlD1AVWGZfbU",
+        dataType: "json",
+        success: function (result) {
+            var BookList = null;
+            var items = null;
+            console.log("result " + result);
+            BookList = $("#genre-book-list");
+            items = result["results"]["books"]
+            BookList.empty()
+            var range = [0,1,2,3,4]
+            range.forEach(i => {
+                var item = items[i]
+                var image = "";
+                var imgLink = item["book_image"]
+                var title = item["title"]
+                if (imgLink) {
+                    image = `<img src='${imgLink}' height="60"></img>`
                 }
+                var div = $("<div/>").addClass("genre-book")
+                div.append(`<img class="save-img" src="assets/images/save-32.png" height="16" /><a href="${item["amazon_product_url"]}">${title}</a> ${image}`)
+                var chad = div.children("img.save-img")
+                chad.on("click", function () {
+                    saveBook(title, imgLink)
+                })
+                BookList.append(div)
+            })
             },
             error: function (xhr, status, error) {
                 console.error("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
@@ -270,15 +300,24 @@ function retrieveGenres() {
                     BookList = $("#trending-book-list");
                     items = result["results"]["books"]
                     BookList.empty()
-                    for (let i = 0; i < 5; i++) {
-                        var item = items[i]              
-                        var image  = "";
-                        if(item["book_image"]) {
-                            image = `<img src='${item["book_image"]}' height="60"></img>`
+                    var range = [0,1,2,3,4]
+                    range.forEach(i => {
+                        var item = items[i]
+                        var image = "";
+                        var imgLink = item["book_image"]
+                        var title = item["title"]
+                        if (imgLink) {
+                            image = `<img src='${imgLink}' height="60"></img>`
                         }
-                        BookList.append(`<div class='trending-book'>${item["title"]} ${image}</div>`)
-                    }
-                },
+                        var div = $("<div/>").addClass("trend-book")
+                        div.append(`<img class="save-img" src="assets/images/save-32.png" height="16" /><a href="${item["amazon_product_url"]}">${title}</a> ${image}`)
+                        var chad = div.children("img.save-img")
+                        chad.on("click", function () {
+                            saveBook(title, imgLink)
+                        })
+                        BookList.append(div)
+                    })
+                    },
                 error: function (xhr, status, error) {
                     console.error("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
                 }
