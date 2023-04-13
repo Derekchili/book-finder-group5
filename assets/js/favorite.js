@@ -1,3 +1,4 @@
+// This is retrieving favorites object from local, it then parses into javascript and assigns it to favorites.
 var storedFavorites = localStorage.getItem('favorites');
    
 if (storedFavorites) {
@@ -6,21 +7,10 @@ if (storedFavorites) {
    var favorites = {};
 }
 
-
-// {
-//     "The Journals of Captain John Smith" : "http://books.google.com/books/content?id=E8NDSKIYiBUC&printsec=frontcover&img=1&zoom=5&source=gbs_api",
-//     "Travels and Works of Captain John Smith" : "http://books.google.com/books/content?id=xMtaAAAAYAAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-//     "The True Travels, Adventures, and Observations of Captain John Smith into Europe, Asia, Africa, and America From Ann. Dom. 1593 to 1629":"http://books.google.com/books/content?id=-f1UDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
-//     "Captain John Smith's History of Virginia; a Selection":"",
-//     "Captain John Smith's America":"http://books.google.com/books/content?id=C108AAAAIAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api"
-// }
-
-
-// loop over that array and every book create a html card or row based on the data in the card
-// grabbing the ul in the #author section
+// This loops through each item in favorites and creates a UL with text content to the title and author and displays it on the page.
 var authorList = document.querySelector('#author');
 
-// now looping over favorites array and adding each favorites book to it
+
 for (let i = 0; i < favorites.length; i++) {
     var ul = document.createElement('ul');
 
@@ -29,14 +19,14 @@ for (let i = 0; i < favorites.length; i++) {
     author.appendChild(ul);
 }
 
-
-
-
+//  This is calling the sideNav function with button-collapse class, this is a Materialize function which is toggled by clicking the button or link.
 $(".button-collapse").sideNav();
 
+// This is retrieving the DOM element #Author and stores it into the var favoritesLs. Then iterating over each key in the object of favorites and for each title it's grabbing the img link adn the appends it to the favorites card diplaying the title and pic of the book.
 var favoritesLS = $("#author")
 Object.keys(favorites).forEach(book => {
     var imgLink = favorites[book];
     image = `<img src='${imgLink}' height="60"></img>`
     favoritesLS.append(`<section id="author">${book}${image}</section>`)
 });
+
