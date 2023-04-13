@@ -17,34 +17,35 @@
       <nav>
         <div class="nav-wrapper teal lighten-2">
           <a href="#!" class="brand-logo">Book Finder</a>
+          <a href="#" data-activates="mobile-nav" class="button-collapse"
+            ><i class="material-icons">menu</i></a
+          >
           <div class="right hide-on-med-and-down">
             <a
               href="favorite.html"
               class="waves-effect waves-light btn-large amber darken-1"
-              >My Favorites</a
+              >Favorites</a
             >
+          </div>
+          <div class="side-nav" id="mobile-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="favorite.html">Favorites</a></li>
           </div>
         </div>
       </nav>
     </header>
-    <main>
-      <section id="author" class="card">
-        <h2>Author</h2>
-        <input type="text" placeholder="Search..." id="author-search" />
-        <div id="author-results">placeholder</div>
-      </section>
-      <section id="top-trending" class="card">
-        <h2>Top Trending</h2>
-        <div id="trending-dropdown-wrapper" class="dropdown-wrapper">
-          <label for="trending-dropdown">Top 5 Trending:</label>
-          <select id="trending-dropdown">
-            <option value="romance">romance</option>
-            <option value="mystery">mystery</option>
-            <option value="non-fiction">non-fiction</option>
-            <option value="histroical-fiction">historical fiction</option>
-            <option value="fiction">fiction</option>
-          </select>
-        </div>
+    <main class="container">
+      <div class="row">
+        <div class="col s4">
+          <section id="author" class="amber accent-4 card">
+            <h2>Author</h2>
+            <div class="input-field">
+              <input type="text" placeholder="Type..." id="author-search" />
+              <label for="author-search">Search</label>
+              <div id="auth-book-list"></div>
+            </div>
+          </section>
+          </div>
         <div class="col s4">
           <section id="top-trending" class="amber accent-4 card">
             <h2>Top Trending</h2>
@@ -84,5 +85,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="./assets/js/script.js"></script>
+    <script src="assets/js/search.js"></script>
   </body>
 </html>

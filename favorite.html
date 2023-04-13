@@ -16,12 +16,19 @@
       <nav>
         <div class="nav-wrapper teal lighten-2">
           <a href="#!" class="brand-logo">Book Finder</a>
+          <a href="#" data-activates="mobile-nav" class="button-collapse"
+            ><i class="material-icons">menu</i></a
+          >
           <div class="right hide-on-med-and-down">
             <a
               href="search.html"
               class="waves-effect waves-light btn-large amber darken-1"
               >Search</a
             >
+          </div>
+          <div class="side-nav" id="mobile-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search</a></li>
           </div>
         </div>
       </nav>
@@ -37,19 +44,13 @@
         <div class="col s6">
           <section id="author" class="amber accent-4 card">
             <h2>My Favorites</h2>
-            <ul>
-              <li><a>Sherlock Holmes</a></li>
-              <li><a>The Hobbit</a></li>
-              <li><a>The Odyssey</a></li>
-              <li><a>Percy Jackson</a></li>
-              <li><a>The Great Gatsby</a></li>
-              <li><a>War and Peace</a></li>
-            </ul>
+            <ul></ul>
           </section>
         </div>
       </div>
     </main>
-    <script src="assets/js/favorite.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="assets/js/favorite.js"></script>
   </body>
 </html>
