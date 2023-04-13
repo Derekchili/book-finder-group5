@@ -1,6 +1,6 @@
 var googUrl = 'https://www.googleapis.com/books/v1/volumes?q=search+terms&key=AIzaSyD_J1_2HDf8XZGF7p11aeX7W_ICizZspas';
 
-var nytUrl = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa';
+var nytUrl = 'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=fhrv6HKktwDbLubO0ZDJUX5T87ZW7IwY';
 
 console.log(googUrl);
 console.log(nytUrl);
@@ -8,8 +8,6 @@ console.log(nytUrl);
 
 
 $(document).ready(function() {
-    $('select').material_select();
-    
     retrieveGenres();
 
 });
@@ -84,7 +82,7 @@ $(document).ready(function() {
 
 // with the link to favorites page with a class and using a method chaining for this function
 $(document).ready(function() {
-    $('.favorites-link').on('click', function(event) {
+    $('favorites-link').on('click', function(event) {
         event.preventDefault();
 
         var storedFavorites = localStorage.getItem('favorites');
@@ -118,20 +116,22 @@ function callGoogle(searchWords) {
             items = result["items"]
             authBookList.empty()
             var favorites = [];
+            for (var i = 0; i < items.length; i++) {
             var testobj = {
-                // make sure to change this array to not just be the first book chosen
+    // make sure to change this array to not just be the first book chosen
                 title: items[0].volumeInfo.title,
                 author: searchWords,
                 image: items[0].volumeInfo.imageLinks?.smallThumbnail
             };
                 favorites.push(testobj);
+            }    
                 localStorage.setItem('favorites', JSON.stringify(favorites));
             items.forEach(item => {
                 var image  = "";
                 if(item["volumeInfo"]["imageLinks"]) {
                     image = `<img src='${item["volumeInfo"]["imageLinks"]["smallThumbnail"]}' height="60"></img>`
                 }
-                authBookList.append(`<div class='auth-book'>${item["volumeInfo"]<a href=["title"]></a>} ${image}</div>`)
+                authBookList.append(`<div class='auth-book'>${item["volumeInfo"]["title"]} ${image}</div>`)
         
             })
             },
@@ -146,7 +146,7 @@ function callGoogle(searchWords) {
 function retrieveGenres() {
     $.ajax({
         type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+        url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=fhrv6HKktwDbLubO0ZDJUX5T87ZW7IwY",
         dataType: "json",
         success: function (result, status, xhr) {
             var genreList = $("#genre-dropdown");
@@ -179,7 +179,7 @@ function retrieveGenres() {
 function retrieveTrending() {
     $.ajax({
         type: "GET",
-        url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+        url: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=fhrv6HKktwDbLubO0ZDJUX5T87ZW7IwY",
         dataType: "json",
         success: function (result, status, xhr) {
             var trendingList = $("#trend-dropdown");
@@ -201,7 +201,7 @@ function retrieveTrending() {
         searchWords = searchWords.replace(/\s+/g, '-').toLowerCase();
         $.ajax({
             type: "GET",
-            url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchWords + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+            url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchWords + ".json?api-key=fhrv6HKktwDbLubO0ZDJUX5T87ZW7IwY",
             dataType: "json",
             success: function (result) {
                 var BookList = null;
@@ -232,7 +232,7 @@ function retrieveTrending() {
         console.log(searchTrending);
              $.ajax({
             type: "GET",
-                url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=9p5nzFHMFVgj5PbY4jWUFUAEz1POGKRa",
+                url: "https://api.nytimes.com/svc/books/v3/lists/current/" + searchTrending + ".json?api-key=fhrv6HKktwDbLubO0ZDJUX5T87ZW7IwY",
                 dataType: "json",
                 success: function (result) {
                     var BookList = null;
@@ -248,6 +248,7 @@ function retrieveTrending() {
                             image = `<img src='${item["book_image"]}' height="60"></img>`
                         }
                         BookList.append(`<div class='trending-book'>${item["title"]} ${image}</div>`)
+                        
                     }
                 },
                 error: function (xhr, status, error) {
